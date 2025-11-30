@@ -1,0 +1,39 @@
+/**
+ * Suppression List Form Styles
+ */
+
+/* Style checkboxes to be inline with labels */
+.segment-checkboxes .form-group,
+.campaign-checkboxes .form-group {
+    margin-bottom: 5px;
+}
+
+.segment-checkboxes .checkbox,
+.campaign-checkboxes .checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.segment-checkboxes .checkbox label,
+.campaign-checkboxes .checkbox label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.segment-checkboxes .checkbox input[type="checkbox"],
+.campaign-checkboxes .checkbox input[type="checkbox"] {
+    position: static;
+    margin-left: 0;
+    margin-right: 8px;
+    margin-top: 0;
+}
+
+/* Remove the default Mautic checkbox styling that puts it on a new line */
+.segment-checkboxes input[type="checkbox"],
+.campaign-checkboxes input[type="checkbox"] {
+    float: none;
+}

@@ -1,0 +1,99 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block mauticContent %}supressionlist{% endblock %}
+
+{% block indexButton %}
+    <a href="{{ path('mautic_supressionlist_action', {'objectAction': 'view', 'objectId': entity.id}) }}" data-toggle="ajax" class="btn btn-default btn-nospin btn-back">
+        <span>
+            <i class="ri-arrow-left-line"></i>
+            <span>Back to the suppression list</span>
+        </span>
+    </a>
+{% endblock %}
+
+{% block headerTitle %}
+    {{ 'mautic.supressionlist.calendar.title'|trans({'%name%': entity.name, '%year%': year}) }}
+{% endblock %}
+
+{% block actions %}
+    <div class="btn-group">
+        <a href="{{ path('mautic_supressionlist_calendar', {'id': entity.id, 'year': year - 1}) }}" class="btn btn-default">
+            <i class="ri-arrow-left-s-line"></i> {{ year - 1 }}
+        </a>
+        <button class="btn btn-default" disabled>{{ year }}</button>
+        <a href="{{ path('mautic_supressionlist_calendar', {'id': entity.id, 'year': year + 1}) }}" class="btn btn-default">
+            {{ year + 1 }} <i class="ri-arrow-right-s-line"></i>
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% set todayDate = 'now'|date('Y-m-d') %}
+<div class="panel panel-default supressionlist-calendar-wrapper">
+    <div class="panel-body">
+        {% for row in 0..5 %}
+            <div class="row">
+            {% for col in 0..1 %}
+                {% set month = row * 2 + col + 1 %}
+                {% if month <= 12 %}
+                <div class="col-md-6 col-sm-12">
+                    <div class="calendar-month">
+                        <h4 class="text-center">{{ (year ~ '-' ~ month ~ '-01')|date('F') }}</h4>
+                        <table class="table table-bordered calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>Mo</th>
+                                    <th>Tu</th>
+                                    <th>We</th>
+                                    <th>Th</th>
+                                    <th>Fr</th>
+                                    <th>Sa</th>
+                                    <th>Su</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set firstDay = date(year ~ '-' ~ month ~ '-01') %}
+                                {% set daysInMonth = firstDay|date('t') %}
+                                {% set startDayOfWeek = firstDay|date('N') %}
+                                {% set day = 1 %}
+
+                                {% for week in 1..6 %}
+                                    {% if day <= daysInMonth %}
+                                        <tr>
+                                            {% for weekday in 1..7 %}
+                                                {% if (week == 1 and weekday < startDayOfWeek) or day > daysInMonth %}
+                                                    <td class="empty-day"></td>
+                                                {% else %}
+                                                    {% set currentDate = year ~ '-' ~ '%02d'|format(month) ~ '-' ~ '%02d'|format(day) %}
+                                                    {% set isToday = currentDate == todayDate %}
+                                                    <td class="calendar-day{% if isToday %} today{% endif %}" data-date="{{ currentDate }}">
+                                                        {{ day }}
+                                                    </td>
+                                                    {% set day = day + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    var markedDates = {{ markedDates|json_encode|raw }};
+    var suprListId = {{ entity.id }};
+    var baseUrl = '{{ path('mautic_supressionlist_toggle_date', {'id': '__ID__', 'date': '__DATE__', 'action': '__ACTION__'})|raw }}';
+
+    // Reinitialize calendar when loaded via AJAX
+    if (typeof SupressionListCalendar !== 'undefined') {
+        SupressionListCalendar.init();
+    }
+</script>
+{% endblock %}

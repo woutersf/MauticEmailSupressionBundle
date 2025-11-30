@@ -1,0 +1,79 @@
+/**
+ * Suppression List Calendar Styles
+ */
+
+.supressionlist-calendar-wrapper {
+    margin-top: 20px;
+}
+
+.calendar-month {
+    margin-bottom: 20px;
+    width: 350px;
+}
+
+.calendar-month h4 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.calendar-table {
+    margin-bottom: 0;
+}
+
+.calendar-table th {
+    text-align: center;
+    padding: 5px;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.calendar-table td {
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.calendar-day {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.calendar-day:hover,
+.calendar-day.hover {
+    background-color: #ffcccb !important;
+}
+
+.calendar-day.marked {
+    background-color: #dc3545 !important;
+    color: white;
+    font-weight: bold;
+}
+
+.calendar-day.marked:hover {
+    background-color: #c82333 !important;
+}
+
+.calendar-day.today {
+    font-weight: bold;
+}
+
+.empty-day {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .calendar-month {
+        margin-bottom: 30px;
+    }
+
+    .calendar-table th,
+    .calendar-table td {
+        padding: 5px 2px;
+        font-size: 11px;
+    }
+}

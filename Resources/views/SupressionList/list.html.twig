@@ -1,0 +1,125 @@
+{% set isIndex = tmpl == 'index' ? true : false %}
+{% set tmpl = 'list' %}
+
+{% extends isIndex ? '@MauticCore/Default/content.html.twig' : '@MauticCore/Default/raw_output.html.twig' %}
+
+{% block headerTitle %}{{ 'mautic.supressionlist.header.title'|trans }}{% endblock %}
+
+{% block content %}
+  {% if isIndex %}
+    <div id="page-list-wrapper" class="panel panel-default">
+        {{ include('@MauticCore/Helper/list_toolbar.html.twig', {
+            'searchValue': searchValue,
+            'list_actions': include('@MauticCore/Helper/toolbar_page_actions.html.twig', {
+                'templateButtons': {
+                    'new': permissions['supressionlist:supressionlists:create'],
+                },
+                'routeBase': 'supressionlist',
+                'langVar': 'supressionlist',
+            }),
+        }) }}
+        <div class="page-list">
+  {% endif %}
+
+  {% if items|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-hover supressionlist-list" id="supressionlistTable">
+          <thead>
+            <tr>
+              {{ include('@MauticCore/Helper/tableheader.html.twig', {
+                  'checkall': 'true',
+                  'target': '#supressionlistTable',
+                  'routeBase': 'supressionlist',
+                  'templateButtons': {
+                    'delete': permissions['supressionlist:supressionlists:delete'],
+                  },
+              }) }}
+
+              {{ include('@MauticCore/Helper/tableheader.html.twig', {
+                  'sessionVar': 'supressionlist',
+                  'orderBy': 's.id',
+                  'text': 'mautic.core.id',
+                  'class': 'col-supressionlist-id',
+              }) }}
+
+              {{ include('@MauticCore/Helper/tableheader.html.twig', {
+                  'sessionVar': 'supressionlist',
+                  'orderBy': 's.name',
+                  'text': 'mautic.core.name',
+                  'class': 'col-supressionlist-name',
+                  'default': true,
+              }) }}
+
+              {{ include('@MauticCore/Helper/tableheader.html.twig', {
+                  'sessionVar': 'supressionlist',
+                  'orderBy': 's.dateAdded',
+                  'text': 'mautic.core.date.added',
+                  'class': 'visible-md visible-lg col-supressionlist-dateAdded',
+              }) }}
+
+              {{ include('@MauticCore/Helper/tableheader.html.twig', {
+                  'sessionVar': 'supressionlist',
+                  'orderBy': 's.createdByUser',
+                  'text': 'mautic.core.createdby',
+                  'class': 'visible-md visible-lg col-supressionlist-createdByUser',
+              }) }}
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>
+                      {{ include('@MauticCore/Helper/list_actions.html.twig', {
+                          'item': item,
+                          'templateButtons' : {
+                          'edit': permissions['supressionlist:supressionlists:edit'],
+                          'delete': permissions['supressionlist:supressionlists:delete'],
+                          },
+                          'routeBase': 'supressionlist',
+                          'customButtons': [
+                              {
+                                  'attr': {
+                                      'href': path('mautic_supressionlist_calendar', {'id': item.id, 'year': 'now'|date('Y')}),
+                                  },
+                                  'iconClass': 'ri-calendar-line',
+                                  'btnText': 'Manage calendar'
+                              }
+                          ]
+                      }) }}
+                    </td>
+                    <td>{{ item.id }}</td>
+                    <td>
+                        <div>
+                            <a href="{{ path('mautic_supressionlist_action', {'objectAction': 'view', 'objectId': item.id}) }}">
+                                {{ item.name }}
+                            </a>
+                        </div>
+                    </td>
+                    <td class="visible-md visible-lg" title="{{ item.dateAdded ? dateToFullConcat(item.dateAdded) : '' }}">
+                        {{ item.dateAdded ? dateToDate(item.dateAdded) : '' }}
+                    </td>
+                    <td class="visible-md visible-lg">{{ item.createdByUser }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        {{ include('@MauticCore/Helper/pagination.html.twig', {
+            'totalItems': totalItems,
+            'page': page,
+            'limit': limit,
+            'menuLinkId': 'mautic_supressionlist_index',
+            'baseUrl': path('mautic_supressionlist_index'),
+            'sessionVar': 'supressionlist',
+        }) }}
+    </div>
+  {% else %}
+    {{ include('@MauticCore/Helper/noresults.html.twig', {'tip' : 'mautic.supressionlist.noresults.tip'}) }}
+  {% endif %}
+
+  {% if isIndex %}
+        </div>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block mauticContent %}supressionlist{% endblock %}
+
+{% block indexButton %}
+{{- include('@MauticCore/Helper/page_actions.html.twig', {
+    'item': entity,
+    'templateButtons': {
+        'close': permissions['supressionlist:supressionlists:view'],
+    },
+    'routeBase': 'supressionlist',
+    'targetLabel': 'mautic.supressionlist.header.title'|trans
+}) -}}
+{% endblock %}
+
+{% block headerTitle %}{{ entity.name }}{% endblock %}
+
+{% block actions %}
+    <div class="btn-group">
+        <a href="{{ path('mautic_supressionlist_calendar', {'id': entity.id, 'year': 'now'|date('Y')}) }}" class="btn btn-default">
+            <i class="ri-calendar-line"></i> {{ 'Manage calendar'|trans }}
+        </a>
+    </div>
+    {{- include('@MauticCore/Helper/page_actions.html.twig', {
+        'item': entity,
+        'templateButtons': {
+            'edit': permissions['supressionlist:supressionlists:edit'],
+            'delete': permissions['supressionlist:supressionlists:delete'],
+        },
+        'routeBase': 'supressionlist',
+    }) -}}
+{% endblock %}
+
+{% block content %}
+<!-- start: box layout -->
+<div class="box-layout">
+    <!-- left section -->
+    <div class="col-md-9 height-auto">
+        <div>
+            <!-- detail collapseable toggler -->
+            <div class="collapse pr-md pl-md" id="supressionlist-details">
+                <div class="pr-md pl-md pb-md">
+                    <div class="panel shd-none mb-0">
+                        <table class="table table-hover mb-0">
+                            <tbody>
+                            {{ include('@MauticCore/Helper/details.html.twig', {'entity': entity}) }}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ detail collapseable toggler -->
+        <div>
+            <div class="hr-expand nm">
+                <span data-toggle="tooltip" title="Detail">
+                    <a href="javascript:void(0)" class="arrow text-muted collapsed" data-toggle="collapse" data-target="#supressionlist-details">
+                        <span class="caret"></span> {{ 'mautic.core.details'|trans }}
+                    </a>
+                </span>
+            </div>
+
+            <div class="pa-md">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ 'Selected Dates'|trans }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if formattedDates is empty %}
+                                    <p class="text-muted">{{ 'No dates selected'|trans }}</p>
+                                {% else %}
+                                    <ul class="list-unstyled">
+                                        {% for dateRange in formattedDates %}
+                                            <li>{{ dateRange }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ 'Linked Segments'|trans }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if segments is empty %}
+                                    <p class="text-muted">{{ 'No segments linked'|trans }}</p>
+                                {% else %}
+                                    <ul class="list-unstyled">
+                                        {% for segment in segments %}
+                                            <li>
+                                                <a href="{{ path('mautic_segment_action', {'objectAction': 'view', 'objectId': segment.id}) }}">
+                                                    {{ segment.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ 'Linked Campaigns'|trans }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if campaigns is empty %}
+                                    <p class="text-muted">{{ 'No campaigns linked'|trans }}</p>
+                                {% else %}
+                                    <ul class="list-unstyled">
+                                        {% for campaign in campaigns %}
+                                            <li>
+                                                <a href="{{ path('mautic_campaign_action', {'objectAction': 'view', 'objectId': campaign.id}) }}">
+                                                    {{ campaign.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ left section -->
+
+    <!-- right section -->
+    <div class="col-md-3 bg-white height-auto">
+        <div class="pr-lg pl-lg pt-md pb-md">
+            <h5 class="fw-sb mb-xs">{{ 'mautic.core.info'|trans }}</h5>
+            <div class="text-muted">
+                <div class="mb-xs">
+                    <span class="fa fa-calendar"></span>
+                    <span>{{ 'mautic.core.date.added'|trans }}: {{ dateToDate(entity.dateAdded) }}</span>
+                </div>
+                {% if entity.createdByUser %}
+                <div class="mb-xs">
+                    <span class="fa fa-user"></span>
+                    <span>{{ 'mautic.core.createdby'|trans }}: {{ entity.createdByUser }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!--/ right section -->
+</div>
+<!--/ end: box layout -->
+{% endblock %}
