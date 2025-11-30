@@ -1,5 +1,8 @@
 # Mautic Email Suppression Bundle
 
+> **⚠️ WARNING: BETA VERSION**
+> This plugin is currently in **BETA** and under active development. The work is not finished yet. Features may change, and there may be bugs or incomplete functionality. Use at your own risk in production environments.
+
 A comprehensive plugin for managing email suppression dates in Mautic. Define blackout periods when emails should not be sent to specific segments and campaigns, with an intuitive calendar interface for date selection.
 
 ## Overview
