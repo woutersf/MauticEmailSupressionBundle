@@ -54,6 +54,12 @@ return [
             'mautic.supressionlist.asset.subscriber' => [
                 'class' => MauticPlugin\MauticEmailSupressionBundle\EventListener\AssetSubscriber::class,
             ],
+            'mautic.supressionlist.campaign.suppression.subscriber' => [
+                'class' => MauticPlugin\MauticEmailSupressionBundle\EventListener\CampaignSuppressionSubscriber::class,
+                'arguments' => [
+                    'database_connection',
+                ],
+            ],
         ],
         'forms' => [
             'mautic.supressionlist.form.type.supressionlist' => [
