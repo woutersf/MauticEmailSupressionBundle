@@ -163,39 +163,6 @@ Configure these in **Settings → Roles**.
 6. **Test First** - Verify suppression behavior with a test segment before applying to production
 7. **Coordinate Teams** - Ensure marketing, sales, and support teams are aware of blackout periods
 
-## Troubleshooting
-
-### Calendar dates not turning red when clicked
-
-**Solution:**
-1. Check browser console for JavaScript errors
-2. Ensure AJAX requests are completing successfully
-3. Clear browser cache
-4. Verify the date is being saved in the database
-
-### Suppression not working for emails
-
-**Solution:**
-1. Verify the suppression list is linked to the correct segment or campaign
-2. Check that the current date matches a suppressed date in the calendar
-3. Ensure the plugin is published and enabled
-4. Review email send logs for suppression indicators
-
-### Changes not saving
-
-**Solution:**
-1. Clear Mautic cache
-2. Check database permissions
-3. Verify form validation is passing
-4. Check Mautic logs for errors
-
-### Calendar showing wrong dates
-
-**Solution:**
-1. Verify server timezone is configured correctly
-2. Check PHP date/time settings
-3. Ensure database timezone matches application timezone
-
 ## API Integration
 
 ### Get Suppression Dates for a List
@@ -291,19 +258,6 @@ The plugin uses optimized database queries with proper indexes:
 │  - Campaign execution               │
 └─────────────────────────────────────┘
 ```
-
-## Roadmap
-
-Future enhancements being considered:
-
-- [ ] Recurring date patterns (e.g., "every Friday")
-- [ ] Import/export suppression dates
-- [ ] Bulk date operations
-- [ ] Suppression templates for common holidays
-- [ ] Email notification before suppression periods
-- [ ] Integration with external calendar systems
-- [ ] Suppression analytics and reporting
-- [ ] Time-based suppression (not just dates)
 
 ## Support
 
