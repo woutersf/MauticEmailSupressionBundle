@@ -62,31 +62,31 @@ final class Version20241130000000 extends AbstractMauticMigration
             ['onDelete' => 'CASCADE']
         );
 
-        // Create supr_list_campaign_segment table
-        $suprListCampaignSegmentTable = $schema->createTable('supr_list_campaign_segment');
+        // Create supr_list_campaign_email table
+        $suprListCampaignEmailTable = $schema->createTable('supr_list_campaign_email');
 
-        $suprListCampaignSegmentTable->addColumn('id', 'integer', [
+        $suprListCampaignEmailTable->addColumn('id', 'integer', [
             'autoincrement' => true,
             'notnull' => true,
         ]);
 
-        $suprListCampaignSegmentTable->addColumn('supr_list_id', 'integer', [
+        $suprListCampaignEmailTable->addColumn('supr_list_id', 'integer', [
             'notnull' => true,
         ]);
 
-        $suprListCampaignSegmentTable->addColumn('campaign_id', 'integer', [
+        $suprListCampaignEmailTable->addColumn('campaign_id', 'integer', [
             'notnull' => false,
         ]);
 
-        $suprListCampaignSegmentTable->addColumn('segment_id', 'integer', [
+        $suprListCampaignEmailTable->addColumn('email_id', 'integer', [
             'notnull' => false,
         ]);
 
-        $suprListCampaignSegmentTable->setPrimaryKey(['id']);
-        $suprListCampaignSegmentTable->addIndex(['supr_list_id'], 'idx_supr_list');
-        $suprListCampaignSegmentTable->addIndex(['campaign_id'], 'idx_campaign');
-        $suprListCampaignSegmentTable->addIndex(['segment_id'], 'idx_segment');
-        $suprListCampaignSegmentTable->addForeignKeyConstraint(
+        $suprListCampaignEmailTable->setPrimaryKey(['id']);
+        $suprListCampaignEmailTable->addIndex(['supr_list_id'], 'idx_supr_list');
+        $suprListCampaignEmailTable->addIndex(['campaign_id'], 'idx_campaign');
+        $suprListCampaignEmailTable->addIndex(['email_id'], 'idx_email');
+        $suprListCampaignEmailTable->addForeignKeyConstraint(
             'supr_list',
             ['supr_list_id'],
             ['id'],
@@ -96,7 +96,7 @@ final class Version20241130000000 extends AbstractMauticMigration
 
     public function down(Schema $schema): void
     {
-        $schema->dropTable('supr_list_campaign_segment');
+        $schema->dropTable('supr_list_campaign_email');
         $schema->dropTable('supr_list_date');
         $schema->dropTable('supr_list');
     }

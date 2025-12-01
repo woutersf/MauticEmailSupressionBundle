@@ -36,17 +36,17 @@ class SupressionListType extends AbstractType
         );
 
         $builder->add(
-            'segments',
+            'emails',
             ChoiceType::class,
             [
-                'label'      => 'mautic.supressionlist.form.segments',
+                'label'      => 'Segment Emails',
                 'label_attr' => ['class' => 'control-label'],
-                'choices'    => $options['segment_choices'],
+                'choices'    => $options['email_choices'],
                 'expanded'   => true,
                 'multiple'   => true,
                 'required'   => false,
                 'mapped'     => false,
-                'data'       => $options['selected_segments'],
+                'data'       => $options['selected_emails'],
             ]
         );
 
@@ -74,9 +74,9 @@ class SupressionListType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => \MauticPlugin\MauticEmailSupressionBundle\Entity\SuprList::class,
-            'segment_choices' => [],
+            'email_choices' => [],
             'campaign_choices' => [],
-            'selected_segments' => [],
+            'selected_emails' => [],
             'selected_campaigns' => [],
         ]);
     }

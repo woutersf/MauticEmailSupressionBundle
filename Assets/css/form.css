@@ -4,12 +4,12 @@
 
 
 /* Style checkboxes to be inline with labels */
-.segment-checkboxes .form-group,
+.email-checkboxes .form-group,
 .campaign-checkboxes .form-group {
     margin-bottom: 5px;
 }
 
-.segment-checkboxes .checkbox,
+.email-checkboxes .checkbox,
 .campaign-checkboxes .checkbox {
     display: flex;
     align-items: center;
@@ -17,7 +17,7 @@
     margin-bottom: 5px;
 }
 
-.segment-checkboxes .checkbox label,
+.email-checkboxes .checkbox label,
 .campaign-checkboxes .checkbox label {
     display: flex;
     align-items: center;
@@ -25,7 +25,7 @@
     padding-left: 0;
 }
 
-.segment-checkboxes .checkbox input[type="checkbox"],
+.email-checkboxes .checkbox input[type="checkbox"],
 .campaign-checkboxes .checkbox input[type="checkbox"] {
     position: static;
     margin-left: 0;
@@ -34,7 +34,7 @@
 }
 
 /* Remove the default Mautic checkbox styling that puts it on a new line */
-.segment-checkboxes input[type="checkbox"],
+.email-checkboxes input[type="checkbox"],
 .campaign-checkboxes input[type="checkbox"] {
     float: none;
 }

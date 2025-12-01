@@ -116,19 +116,21 @@ class SupressionListModel extends FormModel
             $options['action'] = $action;
         }
 
-        // Get all segments ordered by name
-        if (!isset($options['segment_choices'])) {
-            $segments = $this->em->getRepository(\Mautic\LeadBundle\Entity\LeadList::class)
-                ->createQueryBuilder('s')
-                ->orderBy('s.name', 'ASC')
+        // Get all segment emails ordered by name
+        if (!isset($options['email_choices'])) {
+            $emails = $this->em->getRepository(\Mautic\EmailBundle\Entity\Email::class)
+                ->createQueryBuilder('e')
+                ->where('e.emailType = :emailType')
+                ->setParameter('emailType', 'list')
+                ->orderBy('e.name', 'ASC')
                 ->getQuery()
                 ->getResult();
 
-            $segmentChoices = [];
-            foreach ($segments as $segment) {
-                $segmentChoices[$segment->getName()] = $segment->getId();
+            $emailChoices = [];
+            foreach ($emails as $email) {
+                $emailChoices[$email->getName()] = $email->getId();
             }
-            $options['segment_choices'] = $segmentChoices;
+            $options['email_choices'] = $emailChoices;
         }
 
         // Get all campaigns ordered by name
@@ -159,29 +161,29 @@ class SupressionListModel extends FormModel
     }
 
     /**
-     * Get linked segments and campaigns for a suppression list
+     * Get linked emails and campaigns for a suppression list
      */
     public function getLinkedSegmentsAndCampaigns($suprListId): array
     {
-        $links = $this->em->getRepository(\MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignSegment::class)
+        $links = $this->em->getRepository(\MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignEmail::class)
             ->createQueryBuilder('l')
             ->where('l.suprList = :suprListId')
             ->setParameter('suprListId', $suprListId)
             ->getQuery()
             ->getResult();
 
-        $segments = [];
+        $emails = [];
         $campaigns = [];
 
         foreach ($links as $link) {
-            $segmentId = $link->getSegmentId();
+            $emailId = $link->getEmailId();
             $campaignId = $link->getCampaignId();
 
-            // Fetch segment details if segment ID exists
-            if ($segmentId) {
-                $segment = $this->em->getRepository(\Mautic\LeadBundle\Entity\LeadList::class)->find($segmentId);
-                if ($segment) {
-                    $segments[$segmentId] = $segment;
+            // Fetch email details if email ID exists
+            if ($emailId) {
+                $email = $this->em->getRepository(\Mautic\EmailBundle\Entity\Email::class)->find($emailId);
+                if ($email) {
+                    $emails[$emailId] = $email;
                 }
             }
 
@@ -195,15 +197,15 @@ class SupressionListModel extends FormModel
         }
 
         return [
-            'segments'  => array_values($segments),
+            'emails'    => array_values($emails),
             'campaigns' => array_values($campaigns),
         ];
     }
 
     /**
-     * Save linked segments and campaigns for a suppression list
+     * Save linked emails and campaigns for a suppression list
      */
-    public function saveLinkedSegmentsAndCampaigns($suprListId, array $segmentIds, array $campaignIds): void
+    public function saveLinkedSegmentsAndCampaigns($suprListId, array $emailIds, array $campaignIds): void
     {
         $suprList = $this->getEntity($suprListId);
         if (!$suprList) {
@@ -212,26 +214,26 @@ class SupressionListModel extends FormModel
 
         // Delete all existing links for this suppression list
         $this->em->createQueryBuilder()
-            ->delete(\MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignSegment::class, 'l')
+            ->delete(\MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignEmail::class, 'l')
             ->where('l.suprList = :suprListId')
             ->setParameter('suprListId', $suprListId)
             ->getQuery()
             ->execute();
 
-        // Add new segment links
-        foreach ($segmentIds as $segmentId) {
-            $link = new \MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignSegment();
+        // Add new email links
+        foreach ($emailIds as $emailId) {
+            $link = new \MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignEmail();
             $link->setSuprList($suprList);
-            $link->setSegmentId($segmentId);
+            $link->setEmailId($emailId);
             $link->setCampaignId(null);
             $this->em->persist($link);
         }
 
         // Add new campaign links
         foreach ($campaignIds as $campaignId) {
-            $link = new \MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignSegment();
+            $link = new \MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListCampaignEmail();
             $link->setSuprList($suprList);
-            $link->setSegmentId(null);
+            $link->setEmailId(null);
             $link->setCampaignId($campaignId);
             $this->em->persist($link);
         }

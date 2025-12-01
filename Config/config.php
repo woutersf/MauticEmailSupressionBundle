@@ -60,6 +60,12 @@ return [
                     'database_connection',
                 ],
             ],
+            'mautic.supressionlist.email.suppression.subscriber' => [
+                'class' => MauticPlugin\MauticEmailSupressionBundle\EventListener\EmailSuppressionSubscriber::class,
+                'arguments' => [
+                    'database_connection',
+                ],
+            ],
         ],
         'forms' => [
             'mautic.supressionlist.form.type.supressionlist' => [

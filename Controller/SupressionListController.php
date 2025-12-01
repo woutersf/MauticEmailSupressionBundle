@@ -135,14 +135,14 @@ class SupressionListController extends AbstractStandardFormController
             'objectId'     => $entity->getId(),
         ]);
 
-        // Get currently selected segments and campaigns
-        $selectedSegments = [];
+        // Get currently selected emails and campaigns
+        $selectedEmails = [];
         $selectedCampaigns = [];
 
         if (!$isNew) {
             $linkedData = $model->getLinkedSegmentsAndCampaigns($entity->getId());
-            foreach ($linkedData['segments'] as $segment) {
-                $selectedSegments[] = $segment->getId();
+            foreach ($linkedData['emails'] as $email) {
+                $selectedEmails[] = $email->getId();
             }
             foreach ($linkedData['campaigns'] as $campaign) {
                 $selectedCampaigns[] = $campaign->getId();
@@ -150,7 +150,7 @@ class SupressionListController extends AbstractStandardFormController
         }
 
         $form = $model->createForm($entity, $this->formFactory, $action, [
-            'selected_segments' => $selectedSegments,
+            'selected_emails' => $selectedEmails,
             'selected_campaigns' => $selectedCampaigns,
         ]);
 
@@ -160,12 +160,12 @@ class SupressionListController extends AbstractStandardFormController
                 if ($valid = $this->isFormValid($form)) {
                     $model->saveEntity($entity);
 
-                    // Get submitted segments and campaigns
-                    $submittedSegments = $form->get('segments')->getData() ?? [];
+                    // Get submitted emails and campaigns
+                    $submittedEmails = $form->get('emails')->getData() ?? [];
                     $submittedCampaigns = $form->get('campaigns')->getData() ?? [];
 
-                    // Save linked segments and campaigns
-                    $model->saveLinkedSegmentsAndCampaigns($entity->getId(), $submittedSegments, $submittedCampaigns);
+                    // Save linked emails and campaigns
+                    $model->saveLinkedSegmentsAndCampaigns($entity->getId(), $submittedEmails, $submittedCampaigns);
 
                     $this->addFlashMessage(
                         'mautic.core.notice.' . ($isNew ? 'created' : 'updated'),
@@ -232,7 +232,7 @@ class SupressionListController extends AbstractStandardFormController
         // Format dates as ranges
         $formattedDates = $this->formatDatesAsRanges($dates);
 
-        // Get linked segments and campaigns
+        // Get linked emails and campaigns
         $linkedData = $model->getLinkedSegmentsAndCampaigns($objectId);
 
         return $this->delegateView([
@@ -240,7 +240,7 @@ class SupressionListController extends AbstractStandardFormController
                 'entity'         => $entity,
                 'dates'          => $dates,
                 'formattedDates' => $formattedDates,
-                'segments'       => $linkedData['segments'],
+                'emails'         => $linkedData['emails'],
                 'campaigns'      => $linkedData['campaigns'],
                 'permissions'    => $this->getPermissions(),
             ],

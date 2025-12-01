@@ -16,9 +16,9 @@ The Mautic Email Suppression Bundle allows marketers to create suppression lists
 - **Suppression List Management** - Create and manage multiple suppression lists with custom names
 - **Interactive Calendar Interface** - Visual calendar for selecting suppression dates with click-to-toggle functionality
 - **Date Range Support** - Consecutive dates are automatically displayed as ranges (e.g., "25 - December - 2025 — 31 - December - 2025")
-- **Segment Integration** - Link suppression lists to specific segments
+- **Email Integration** - Link suppression lists to specific segment emails
 - **Campaign Integration** - Link suppression lists to specific campaigns
-- **Detailed Views** - See all information about suppression lists including linked segments, campaigns, and dates
+- **Detailed Views** - See all information about suppression lists including linked emails, campaigns, and dates
 - **Year Navigation** - Easily browse through different years to manage future suppression dates
 - **Real-time Updates** - AJAX-powered date toggling for instant feedback
 
@@ -76,10 +76,10 @@ The plugin creates three tables:
 - Fields: id, supr_list_id, date
 - Indexed for efficient date lookups
 
-### `supr_list_campaign_segment`
-- Links suppression lists to segments and campaigns
-- Fields: id, supr_list_id, segment_id, campaign_id
-- Either segment_id or campaign_id is set (not both)
+### `supr_list_campaign_email`
+- Links suppression lists to emails and campaigns
+- Fields: id, supr_list_id, email_id, campaign_id
+- Either email_id or campaign_id is set (not both)
 
 ## Usage
 
@@ -88,7 +88,7 @@ The plugin creates three tables:
 1. Navigate to **Suppression Lists** in the main menu
 2. Click **New** to create a suppression list
 3. Enter a descriptive name (e.g., "Christmas Holiday 2025")
-4. Select which **segments** should be affected (optional)
+4. Select which **segment emails** should be affected (optional)
 5. Select which **campaigns** should be affected (optional)
 6. Click **Save & Close**
 
@@ -115,7 +115,7 @@ The detail view shows:
 
 1. **Name** - The suppression list name
 2. **Selected Dates** - All suppressed dates, with consecutive dates shown as ranges
-3. **Linked Segments** - All segments affected by this suppression list
+3. **Linked Segment Emails** - All segment emails affected by this suppression list
 4. **Linked Campaigns** - All campaigns affected by this suppression list
 5. **Creation Info** - Date created and user who created it
 
@@ -132,12 +132,12 @@ The detail view shows:
 
 When a suppression list is linked to:
 
-- **Segments**: Emails to contacts in those segments are blocked on suppressed dates
+- **Segment Emails**: Broadcast emails sent to segments are blocked on suppressed dates
 - **Campaigns**: Campaign emails are blocked on suppressed dates
 
 **How it works:**
 - The suppression check happens before email sends
-- If the current date matches a suppressed date for the recipient's segment or campaign, the email is not sent
+- If the current date matches a suppressed date for the email or campaign, the email is not sent
 - Emails are not queued or delayed - they are simply skipped
 - This ensures compliance with blackout periods
 
@@ -184,12 +184,12 @@ $dateEntity = $model->findDateBySuprListAndDate($suprListId, $dateObj);
 $isSuppressed = ($dateEntity !== null);
 ```
 
-### Get Linked Segments and Campaigns
+### Get Linked Emails and Campaigns
 
 ```php
 $model = $this->getModel('supressionlist.supressionlist');
 $linkedData = $model->getLinkedSegmentsAndCampaigns($suprListId);
-$segments = $linkedData['segments'];
+$emails = $linkedData['emails'];
 $campaigns = $linkedData['campaigns'];
 ```
 
@@ -243,14 +243,14 @@ The plugin uses optimized database queries with proper indexes:
 │  │  Model Layer                │   │
 │  │  - CRUD operations          │   │
 │  │  - Date management          │   │
-│  │  - Segment/campaign linking │   │
+│  │  - Email/campaign linking   │   │
 │  └─────────────────────────────┘   │
 │                                     │
 │  ┌─────────────────────────────┐   │
 │  │  Entity Layer               │   │
 │  │  - SuprList                 │   │
 │  │  - SuprListDate             │   │
-│  │  - SuprListCampaignSegment  │   │
+│  │  - SuprListCampaignEmail    │   │
 │  └─────────────────────────────┘   │
 └─────────────────────────────────────┘
               ↓ integrates with
@@ -286,7 +286,7 @@ Created by Frederik Wouters and the Mautic Community
 - Suppression list management
 - Interactive calendar interface with year navigation
 - Date range formatting for consecutive dates
-- Segment and campaign linking
+- Email and campaign linking
 - AJAX-powered date toggling
 - Detailed view with all suppression information
 - Real-time calendar updates

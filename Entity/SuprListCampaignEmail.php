@@ -5,9 +5,9 @@ namespace MauticPlugin\MauticEmailSupressionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 
-class SuprListCampaignSegment
+class SuprListCampaignEmail
 {
-    public const TABLE_NAME = 'supr_list_campaign_segment';
+    public const TABLE_NAME = 'supr_list_campaign_email';
 
     /**
      * @var int
@@ -27,7 +27,7 @@ class SuprListCampaignSegment
     /**
      * @var int
      */
-    private $segmentId;
+    private $emailId;
 
     public static function loadMetadata(ORM\ClassMetadata $metadata): void
     {
@@ -45,14 +45,14 @@ class SuprListCampaignSegment
             ->nullable()
             ->build();
 
-        $builder->createField('segmentId', 'integer')
-            ->columnName('segment_id')
+        $builder->createField('emailId', 'integer')
+            ->columnName('email_id')
             ->nullable()
             ->build();
 
         $builder->addIndex(['supr_list_id'], 'idx_supr_list');
         $builder->addIndex(['campaign_id'], 'idx_campaign');
-        $builder->addIndex(['segment_id'], 'idx_segment');
+        $builder->addIndex(['email_id'], 'idx_email');
     }
 
     public function getId()
@@ -82,14 +82,14 @@ class SuprListCampaignSegment
         return $this;
     }
 
-    public function getSegmentId()
+    public function getEmailId()
     {
-        return $this->segmentId;
+        return $this->emailId;
     }
 
-    public function setSegmentId($segmentId)
+    public function setEmailId($emailId)
     {
-        $this->segmentId = $segmentId;
+        $this->emailId = $emailId;
         return $this;
     }
 }

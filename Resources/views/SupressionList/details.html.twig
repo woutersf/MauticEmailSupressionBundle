@@ -86,17 +86,17 @@
                     <div class="col-sm-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{ 'Linked Segments'|trans }}</h3>
+                                <h3 class="panel-title">{{ 'Linked Segment Emails'|trans }}</h3>
                             </div>
                             <div class="panel-body">
-                                {% if segments is empty %}
-                                    <p class="text-muted">{{ 'No segments linked'|trans }}</p>
+                                {% if emails is empty %}
+                                    <p class="text-muted">{{ 'No emails linked'|trans }}</p>
                                 {% else %}
                                     <ul class="list-unstyled">
-                                        {% for segment in segments %}
+                                        {% for email in emails %}
                                             <li>
-                                                <a href="{{ path('mautic_segment_action', {'objectAction': 'view', 'objectId': segment.id}) }}">
-                                                    {{ segment.name }}
+                                                <a href="{{ path('mautic_email_action', {'objectAction': 'view', 'objectId': email.id}) }}">
+                                                    {{ email.name }}
                                                 </a>
                                             </li>
                                         {% endfor %}
