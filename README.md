@@ -3,11 +3,11 @@
 > **⚠️ WARNING: IN DEVELOPMENT VERSION**
 > This plugin is currently too early for **BETA** and under active development. The work is not finished yet and may contain security leaks and the such. Features may change, and there may be bugs or incomplete functionality. Use at your own risk and certainly not in production environments.
 
-A comprehensive plugin for managing email suppression dates in Mautic. Define blackout periods when emails should not be sent to specific segments and campaigns, with an intuitive calendar interface for date selection.
+A comprehensive plugin for managing email suppression dates in Mautic. Define blackout periods when emails should not be sent to specific emails and campaigns, with an intuitive calendar interface for date selection.
 
 ## Overview
 
-The Mautic Email Suppression Bundle allows marketers to create suppression lists with specific dates when emails should be blocked. Link these lists to segments and campaigns to prevent email sends during holidays, company events, maintenance windows, or any other blackout periods.
+The Mautic Email Suppression Bundle allows marketers to create suppression lists with specific dates when emails should be blocked. Link these lists to emails and campaigns to prevent email sends during holidays, company events, maintenance windows, or any other blackout periods.
 
 ![Suppression List Overview](Assets/img/supression%20list%20overview.png)
 
@@ -29,7 +29,7 @@ The Mautic Email Suppression Bundle allows marketers to create suppression lists
 - **Holiday Blackouts** - Block email sends during Christmas, New Year, or other holidays
 - **Maintenance Windows** - Prevent emails during scheduled system maintenance
 - **Company Events** - Suppress emails during conferences, trade shows, or company-wide events
-- **Regional Holidays** - Manage different holiday schedules for different segments/regions
+- **Regional Holidays** - Manage different holiday schedules for different emails/regions
 - **Compliance Periods** - Block sends during regulatory quiet periods
 - **Customer-specific Requests** - Honor individual customer preferences for email-free periods
 
@@ -123,7 +123,7 @@ The detail view shows:
 
 1. Navigate to the suppression list detail view
 2. Click **Edit** in the actions menu
-3. Update the name, segments, or campaigns
+3. Update the name, emails, or campaigns
 4. Click **Save & Close**
 
 **Note:** To modify dates, use the **Manage Calendar** button from the detail view.
@@ -161,9 +161,9 @@ Configure these in **Settings → Roles**.
 1. **Descriptive Names** - Use clear names that indicate the purpose and year (e.g., "Q4 2025 Holiday Blackout")
 2. **Plan Ahead** - Set up suppression dates well in advance of the blackout period
 3. **Review Regularly** - Check suppression lists annually and update for new years
-4. **Segment-Specific** - Create different suppression lists for different regions or customer types
+4. **Email-Specific** - Create different suppression lists for different regions or customer types
 5. **Document Reasons** - Include the reason in the list name for future reference
-6. **Test First** - Verify suppression behavior with a test segment before applying to production
+6. **Test First** - Verify suppression behavior with a test email before applying to production
 7. **Coordinate Teams** - Ensure marketing, sales, and support teams are aware of blackout periods
 
 ## API Integration
