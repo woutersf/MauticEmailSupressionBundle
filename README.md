@@ -137,9 +137,9 @@ When a suppression list is linked to:
 
 **How it works:**
 - The suppression check happens before email sends
-- If the current date matches a suppressed date for the email or campaign, the email is not sent
-- Emails are not queued or delayed - they are simply skipped
-- This ensures compliance with blackout periods
+- If the current date matches a suppressed date for the email or campaign, the email is not sent on that day
+- Emails remain in the queue and will be sent on non-suppressed dates
+- This ensures compliance with blackout periods while maintaining email delivery on allowed dates
 
 ## Configuration
 
