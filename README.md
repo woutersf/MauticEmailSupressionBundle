@@ -22,7 +22,7 @@ The Mautic Email Suppression Bundle allows marketers to create suppression lists
 - **Year Navigation** - Easily browse through different years to manage future suppression dates
 - **Real-time Updates** - AJAX-powered date toggling for instant feedback
 
-![Suppression Calendar](Assets/img/supression_list_calendar.png)
+![Suppression List Detail](Assets/img/supression%20list%20detail.png)
 
 ## Use Cases
 
@@ -94,7 +94,7 @@ The plugin creates three tables:
 
 ### Managing Suppression Dates
 
-![Suppression List Detail](Assets/img/supression%20list%20detail.png)
+![Suppression Calendar](Assets/img/supression_list_calendar.png)
 
 1. From the suppression list detail view, click **Manage Calendar**
 2. Navigate to the desired year using the year navigation buttons
