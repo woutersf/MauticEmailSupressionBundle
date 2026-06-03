@@ -2,14 +2,14 @@
 
 {% block mauticContent %}supressionlist{% endblock %}
 
-{% block indexButton %}
+{% block preHeader %}
 {{- include('@MauticCore/Helper/page_actions.html.twig', {
     'item': entity,
     'templateButtons': {
         'close': permissions['supressionlist:supressionlists:view'],
     },
     'routeBase': 'supressionlist',
-    'targetLabel': 'mautic.supressionlist.header.title'|trans
+    'targetLabel': 'mautic.supressionlist.header.title'|trans,
 }) -}}
 {% endblock %}
 

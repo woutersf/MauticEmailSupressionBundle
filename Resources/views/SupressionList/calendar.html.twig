@@ -2,13 +2,15 @@
 
 {% block mauticContent %}supressionlist{% endblock %}
 
-{% block indexButton %}
-    <a href="{{ path('mautic_supressionlist_action', {'objectAction': 'view', 'objectId': entity.id}) }}" data-toggle="ajax" class="btn btn-default btn-nospin btn-back">
-        <span>
-            <i class="ri-arrow-left-line"></i>
-            <span>Back to the suppression list</span>
-        </span>
-    </a>
+{% block preHeader %}
+{{- include('@MauticCore/Helper/page_actions.html.twig', {
+    'item': entity,
+    'templateButtons': {
+        'close': true,
+    },
+    'routeBase': 'supressionlist',
+    'targetLabel': 'mautic.supressionlist.header.title'|trans,
+}) -}}
 {% endblock %}
 
 {% block headerTitle %}
