@@ -10,13 +10,14 @@
     <div id="page-list-wrapper" class="panel panel-default">
         {{ include('@MauticCore/Helper/list_toolbar.html.twig', {
             'searchValue': searchValue,
-            'list_actions': include('@MauticCore/Helper/toolbar_page_actions.html.twig', {
+            'action': path('mautic_supressionlist_index'),
+            'page_actions': {
                 'templateButtons': {
                     'new': permissions['supressionlist:supressionlists:create'],
                 },
                 'routeBase': 'supressionlist',
                 'langVar': 'supressionlist',
-            }),
+            },
         }) }}
         <div class="page-list">
   {% endif %}
