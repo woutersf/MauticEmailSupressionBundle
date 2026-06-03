@@ -30,12 +30,12 @@ class CampaignSuppressionSubscriber implements EventSubscriberInterface
         $campaignId = $campaign->getId();
         $today = (new \DateTime())->format('Y-m-d');
 
-        // Query to check if today's date is suppressed for this campaign
-        // Using EXISTS for optimal performance - stops as soon as first match is found
+        $prefix = defined('MAUTIC_TABLE_PREFIX') ? MAUTIC_TABLE_PREFIX : '';
+
         $sql = "SELECT EXISTS(
                     SELECT 1
-                    FROM supr_list_campaign_email AS sce
-                    INNER JOIN supr_list_date AS dt ON sce.supr_list_id = dt.supr_list_id
+                    FROM {$prefix}supr_list_campaign_email AS sce
+                    INNER JOIN {$prefix}supr_list_date AS dt ON sce.supr_list_id = dt.supr_list_id
                     WHERE sce.campaign_id = :campaign_id
                     AND dt.date = :today
                     LIMIT 1
@@ -43,13 +43,11 @@ class CampaignSuppressionSubscriber implements EventSubscriberInterface
 
         $result = $this->connection->executeQuery($sql, [
             'campaign_id' => $campaignId,
-            'today' => $today,
+            'today'       => $today,
         ])->fetchOne();
 
-        $isSuppressed = (bool) $result;
-
-        if ($isSuppressed) {
-            $event->stopTrigger();
+        if ((bool) $result) {
+            $event->doNotTrigger();
         }
     }
 }

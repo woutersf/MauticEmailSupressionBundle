@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MauticPlugin\MauticEmailSupressionBundle\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
-use Mautic\Migrations\AbstractMauticMigration;
+use Mautic\CoreBundle\Doctrine\AbstractMauticMigration;
 
 final class Version20241130000000 extends AbstractMauticMigration
 {

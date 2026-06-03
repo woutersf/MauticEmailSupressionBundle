@@ -2,6 +2,7 @@
 
 namespace MauticPlugin\MauticEmailSupressionBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Mautic\CoreBundle\Controller\AbstractStandardFormController;
 use MauticPlugin\MauticEmailSupressionBundle\Entity\SuprList;
 use MauticPlugin\MauticEmailSupressionBundle\Entity\SuprListDate;
@@ -12,6 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SupressionListController extends AbstractStandardFormController
 {
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            'doctrine.orm.entity_manager' => EntityManagerInterface::class,
+        ]);
+    }
+
     protected function getPermissions(): array
     {
         return $this->security->isGranted(
@@ -453,7 +461,7 @@ class SupressionListController extends AbstractStandardFormController
             return new JsonResponse(['error' => 'Invalid date format'], 400);
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine.orm.entity_manager');
 
         if ('TRUE' === strtoupper($action)) {
             // Add date

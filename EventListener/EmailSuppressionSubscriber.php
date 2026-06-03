@@ -36,12 +36,12 @@ class EmailSuppressionSubscriber implements EventSubscriberInterface
         $emailId = $email->getId();
         $today = (new \DateTime())->format('Y-m-d');
 
-        // Query to check if today's date is suppressed for this email
-        // Using EXISTS for optimal performance - stops as soon as first match is found
+        $prefix = defined('MAUTIC_TABLE_PREFIX') ? MAUTIC_TABLE_PREFIX : '';
+
         $sql = "SELECT EXISTS(
                     SELECT 1
-                    FROM supr_list_campaign_email AS sce
-                    INNER JOIN supr_list_date AS dt ON sce.supr_list_id = dt.supr_list_id
+                    FROM {$prefix}supr_list_campaign_email AS sce
+                    INNER JOIN {$prefix}supr_list_date AS dt ON sce.supr_list_id = dt.supr_list_id
                     WHERE sce.email_id = :email_id
                     AND dt.date = :today
                     LIMIT 1
