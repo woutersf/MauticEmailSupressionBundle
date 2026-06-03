@@ -8,8 +8,11 @@
     'templateButtons': {
         'close': true,
     },
-    'routeBase': 'supressionlist',
-    'targetLabel': 'mautic.supressionlist.header.title'|trans,
+    'indexRoute': 'mautic_supressionlist_action',
+    'routeVars': {
+        'close': {'objectAction': 'view', 'objectId': entity.id},
+    },
+    'targetLabel': entity.name,
 }) -}}
 {% endblock %}
 
