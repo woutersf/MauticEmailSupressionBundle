@@ -65,6 +65,57 @@
     border: none !important;
 }
 
+/* Toast notification */
+#supr-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 280px;
+    max-width: 420px;
+    padding: 13px 18px;
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.18);
+    font-size: 13px;
+    line-height: 1.4;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+#supr-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#supr-toast.toast-add {
+    background: #1a7f4e;
+    color: #fff;
+}
+
+#supr-toast.toast-remove {
+    background: #4e5d6c;
+    color: #fff;
+}
+
+#supr-toast .toast-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+#supr-toast .toast-body strong {
+    display: block;
+}
+
+#supr-toast .toast-body span {
+    opacity: .85;
+    font-size: 12px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .calendar-month {

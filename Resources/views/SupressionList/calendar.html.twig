@@ -88,10 +88,13 @@
     </div>
 </div>
 
+<div id="supr-toast" role="status" aria-live="polite"></div>
+
 <script>
-    var markedDates = {{ markedDates|json_encode|raw }};
-    var suprListId = {{ entity.id }};
-    var baseUrl = '{{ path('mautic_supressionlist_toggle_date', {'id': '__ID__', 'date': '__DATE__', 'action': '__ACTION__'})|raw }}';
+    var markedDates  = {{ markedDates|json_encode|raw }};
+    var suprListId   = {{ entity.id }};
+    var suprListName = {{ entity.name|json_encode|raw }};
+    var baseUrl      = '{{ path('mautic_supressionlist_toggle_date', {'id': '__ID__', 'date': '__DATE__', 'action': '__ACTION__'})|raw }}';
 
     // Reinitialize calendar when loaded via AJAX
     if (typeof SupressionListCalendar !== 'undefined') {
